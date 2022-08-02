@@ -13,7 +13,7 @@ app.use(logger("dev"))
 
 app.use(body.urlencoded({ extended: false }));  
 
-mongoose.connect("mongodb+srv://Prince:Q18Yc9wvnSn9hHig@cluster0.i5ros.mongodb.net/?retryWrites=true&w=majority",()=>{
+mongoose.connect(process.env.MY_DB,()=>{
   console.log("Database is connected 🧠")
 })
 
