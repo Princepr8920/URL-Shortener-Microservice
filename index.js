@@ -1,4 +1,3 @@
-require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const app = express();
@@ -7,13 +6,13 @@ const mongoose = require("mongoose")
 const body = require("body-parser")
 const port = process.env.PORT || 1000;
 const logger = require("morgan")
-
+require('dotenv').config();
 
 app.use(logger("dev"))
 
 app.use(body.urlencoded({ extended: false }));  
 
-mongoose.connect("mongodb+srv://Prince:Q18Yc9wvnSn9hHig@cluster0.i5ros.mongodb.net/?retryWrites=true&w=majority",()=>{
+mongoose.connect(process.env.MY_DB,()=>{
   console.log("Database is connected 🧠")
 })
 
@@ -25,7 +24,6 @@ app.get('/', function(req, res) {
   res.sendFile(process.cwd() + '/views/index.html');
 });
  
-
 let urlSchema = mongoose.Schema({
   short_url:String,
   original_url:String
