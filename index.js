@@ -40,7 +40,7 @@ app.post('/api/shorturl', function(req, res) {
       res.json({ error: 'invalid url' });
   }else{
   let shorted = new urlModel({
-    short_url:__dirname + "/api/shorturl/" + newUrl,
+    short_url: newUrl,
     original_url:url
   })
 
