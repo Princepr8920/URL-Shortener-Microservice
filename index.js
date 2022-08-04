@@ -2,22 +2,23 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const shortid = require("shortid")
+const mongodb = require("mongodb")
 const mongoose = require("mongoose")
-const body = require("body-parser")
+const bodyParser = require("body-parser")
 const port = process.env.PORT || 1000;
 const logger = require("morgan")
 require('dotenv').config();
 
 app.use(logger("dev"))
 
-app.use(body.urlencoded({ extended: false }));  
+app.use(bodyParser.urlencoded({ extended: false }));  
 
-mongoose.connect(process.env.MY_DB,()=>{
+mongoose.connect(process.env.MY_DB,{useNewUrlParser:true,useUnifiedTopology:true},()=>{
   console.log("Database is connected 🧠")
 })
 
 app.use(cors());
-
+app.use(bodyParser.json())
 app.use('/public', express.static(`${process.cwd()}/public`));
 
 app.get('/', function(req, res) {
@@ -39,7 +40,7 @@ app.post('/api/shorturl', function(req, res) {
       res.json({ error: 'invalid url' });
   }else{
   let shorted = new urlModel({
-    short_url:newUrl,
+    short_url:__dirname + "/api/shorturl/" + newUrl,
     original_url:url
   })
 
